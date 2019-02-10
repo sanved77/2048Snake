@@ -11,13 +11,15 @@ import android.widget.TextView;
 
 public class GridAdapter extends BaseAdapter {
     private Context context;
+    private int nums[];
     private final String[] alphabets = new String[26];
-    private int nums[] = {2,4,8,16,32,64,128,256,512,1024,2048};
+
     //private static int count;
 
 
-    public GridAdapter(Context context) {
+    public GridAdapter(Context context, int nums[]) {
         this.context = context;
+        this.nums = nums;
         fillAlphabets();
     }
 
@@ -36,6 +38,9 @@ public class GridAdapter extends BaseAdapter {
             gridView = inflater.inflate(R.layout.list_item, null);
             CardView cv1 = gridView.findViewById(R.id.cv1);
             switch(nums[position]){
+                case 1:
+                    cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.bg0));
+                    break;
                 case 2:
                     cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.bg2));
                     break;
@@ -80,7 +85,8 @@ public class GridAdapter extends BaseAdapter {
             }else {
                 textView.setTextSize(25);
             }
-            textView.setText("" + nums[position]);
+            if(nums[position] != 1)
+               textView.setText("" + nums[position]);
 
 
         } else {

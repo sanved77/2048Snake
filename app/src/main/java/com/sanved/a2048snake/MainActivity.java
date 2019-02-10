@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
     GridAdapter gAdapt;
 
     private String[] alphabets = new String[26];
-
+    private int nums[] = new int[60];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +25,10 @@ public class MainActivity extends AppCompatActivity {
 
         grid = findViewById(R.id.gridView);
 
-        gAdapt = new GridAdapter(this);
+        fillNumArr();
+        testData();
+
+        gAdapt = new GridAdapter(this, nums);
 
         grid.setAdapter(gAdapt);
 
@@ -40,5 +43,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void fillNumArr(){
+        for(int i = 0; i < 60; i++){
+            nums[i] = 1;
+        }
+    }
+
+    public void testData(){
+        nums[3] = 2;
+        nums[4] = 4;
+        nums[5] = 8;
+        nums[10] = 16;
+        nums[15] = 256;
     }
 }
