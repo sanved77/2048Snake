@@ -1,20 +1,21 @@
 package com.sanved.a2048snake;
 
+import android.content.Context;
+import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -125,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 if(snake.get(0).getPosi() >= 0 && snake.get(0).getPosi() <= 5){
                     gameOver = true;
-                    Toast.makeText(this, "Game Over", Toast.LENGTH_SHORT).show();
+
                 }
                 else {
                     for (i = 0; i < snake.size(); i++) {
@@ -153,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 if(snake.get(0).getPosi() >= 42 && snake.get(0).getPosi() <= 47){
                     gameOver = true;
-                    Toast.makeText(this, "Game Over", Toast.LENGTH_SHORT).show();
+
                 }else {
 
                     for (i = 0; i < snake.size(); i++) {
@@ -181,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 if(snake.get(0).getPosi() % 6 == 0){
                     gameOver = true;
-                    Toast.makeText(this, "Game Over", Toast.LENGTH_SHORT).show();
+
                 }
                 else {
                     for (i = 0; i < snake.size(); i++) {
@@ -208,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case 2: // Right
                 if((snake.get(0).getPosi() + 1) % 6 == 0){
                     gameOver = true;
-                    Toast.makeText(this, "Game Over", Toast.LENGTH_SHORT).show();
+
                 }
                 else {
                     for (i = 0; i < snake.size(); i++) {
@@ -236,7 +237,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             paintSnake();
             gAdapt.updateDat(nums);
         }else{
-            // Game Over
+            tvGameOver.setVisibility(View.VISIBLE);
+            up.hide();
+            down.hide();
+            right.hide();
+            left.hide();
+            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+            } else {
+                v.vibrate(500);
+            }
         }
     }
 
@@ -255,6 +266,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         rand = new Random();
         rand2 = new Random();
+
+        tvGameOver = findViewById(R.id.tvGameOver);
+
     }
 
     public void fillNumArr(){
