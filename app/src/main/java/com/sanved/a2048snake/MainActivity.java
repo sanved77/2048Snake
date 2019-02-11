@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     GridView grid;
     GridAdapter gAdapt;
     FloatingActionButton up, down, left, right;
+    boolean gameOver = false;
     int posi = 3;
     ArrayList<SnakeBod> snake;
 
@@ -87,79 +88,108 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;*/
 
             case R.id.fabUp:
-                for(i = 0 ; i < snake.size(); i++){
 
-                    if(i == 0){
-                        tempPosi = snake.get(0).getPosi();
-                        tempNum = snake.get(0).getNum();
-                        SnakeBod sn = new SnakeBod(tempPosi-6,tempPosi,tempNum);
-                        snake.set(0,sn);
-                    }else{
-                        tempNum = snake.get(i).getNum();
-                        tempPosi = snake.get(i).getPosi();
-                        newPosi = snake.get(i-1).getOldPosi();
-                        SnakeBod sn = new SnakeBod(newPosi,tempPosi,tempNum);
-                        snake.set(i,sn);
+                if(snake.get(0).getPosi() >= 0 && snake.get(0).getPosi() <= 5){
+                    gameOver = true;
+                    Toast.makeText(this, "Game Over", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    for (i = 0; i < snake.size(); i++) {
+
+                        if (i == 0) {
+                            tempPosi = snake.get(0).getPosi();
+                            tempNum = snake.get(0).getNum();
+                            SnakeBod sn = new SnakeBod(tempPosi - 6, tempPosi, tempNum);
+                            snake.set(0, sn);
+                        } else {
+                            tempNum = snake.get(i).getNum();
+                            tempPosi = snake.get(i).getPosi();
+                            newPosi = snake.get(i - 1).getOldPosi();
+                            SnakeBod sn = new SnakeBod(newPosi, tempPosi, tempNum);
+                            snake.set(i, sn);
+                        }
+
                     }
-
                 }
                 break;
             case R.id.fabDown:
-                for(i = 0 ; i < snake.size(); i++){
 
-                    if(i == 0){
-                        tempPosi = snake.get(0).getPosi();
-                        tempNum = snake.get(0).getNum();
-                        SnakeBod sn = new SnakeBod(tempPosi+6,tempPosi,tempNum);
-                        snake.set(0,sn);
-                    }else{
-                        tempNum = snake.get(i).getNum();
-                        tempPosi = snake.get(i).getPosi();
-                        newPosi = snake.get(i-1).getOldPosi();
-                        SnakeBod sn = new SnakeBod(newPosi,tempPosi,tempNum);
-                        snake.set(i,sn);
+                if(snake.get(0).getPosi() >= 42 && snake.get(0).getPosi() <= 47){
+                    gameOver = true;
+                    Toast.makeText(this, "Game Over", Toast.LENGTH_SHORT).show();
+                }else {
+
+                    for (i = 0; i < snake.size(); i++) {
+
+                        if (i == 0) {
+                            tempPosi = snake.get(0).getPosi();
+                            tempNum = snake.get(0).getNum();
+                            SnakeBod sn = new SnakeBod(tempPosi + 6, tempPosi, tempNum);
+                            snake.set(0, sn);
+                        } else {
+                            tempNum = snake.get(i).getNum();
+                            tempPosi = snake.get(i).getPosi();
+                            newPosi = snake.get(i - 1).getOldPosi();
+                            SnakeBod sn = new SnakeBod(newPosi, tempPosi, tempNum);
+                            snake.set(i, sn);
+                        }
+
                     }
-
                 }
                 break;
             case R.id.fabLeft:
-                for(i = 0 ; i < snake.size(); i++){
 
-                    if(i == 0){
-                        tempPosi = snake.get(0).getPosi();
-                        tempNum = snake.get(0).getNum();
-                        SnakeBod sn = new SnakeBod(tempPosi-1,tempPosi,tempNum);
-                        snake.set(0,sn);
-                    }else{
-                        tempNum = snake.get(i).getNum();
-                        tempPosi = snake.get(i).getPosi();
-                        newPosi = snake.get(i-1).getOldPosi();
-                        SnakeBod sn = new SnakeBod(newPosi,tempPosi,tempNum);
-                        snake.set(i,sn);
+                if(snake.get(0).getPosi() % 6 == 0){
+                    gameOver = true;
+                    Toast.makeText(this, "Game Over", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    for (i = 0; i < snake.size(); i++) {
+
+                        if (i == 0) {
+                            tempPosi = snake.get(0).getPosi();
+                            tempNum = snake.get(0).getNum();
+                            SnakeBod sn = new SnakeBod(tempPosi - 1, tempPosi, tempNum);
+                            snake.set(0, sn);
+                        } else {
+                            tempNum = snake.get(i).getNum();
+                            tempPosi = snake.get(i).getPosi();
+                            newPosi = snake.get(i - 1).getOldPosi();
+                            SnakeBod sn = new SnakeBod(newPosi, tempPosi, tempNum);
+                            snake.set(i, sn);
+                        }
+
                     }
-
                 }
                 break;
             case R.id.fabRight:
-                for(i = 0 ; i < snake.size(); i++){
+                if((snake.get(0).getPosi() + 1) % 6 == 0){
+                    gameOver = true;
+                    Toast.makeText(this, "Game Over", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    for (i = 0; i < snake.size(); i++) {
 
-                    if(i == 0){
-                        tempPosi = snake.get(0).getPosi();
-                        tempNum = snake.get(0).getNum();
-                        SnakeBod sn = new SnakeBod(tempPosi+1,tempPosi,tempNum);
-                        snake.set(0,sn);
-                    }else{
-                        tempNum = snake.get(i).getNum();
-                        tempPosi = snake.get(i).getPosi();
-                        newPosi = snake.get(i-1).getOldPosi();
-                        SnakeBod sn = new SnakeBod(newPosi,tempPosi,tempNum);
-                        snake.set(i,sn);
+                        if (i == 0) {
+                            tempPosi = snake.get(0).getPosi();
+                            tempNum = snake.get(0).getNum();
+                            SnakeBod sn = new SnakeBod(tempPosi + 1, tempPosi, tempNum);
+                            snake.set(0, sn);
+                        } else {
+                            tempNum = snake.get(i).getNum();
+                            tempPosi = snake.get(i).getPosi();
+                            newPosi = snake.get(i - 1).getOldPosi();
+                            SnakeBod sn = new SnakeBod(newPosi, tempPosi, tempNum);
+                            snake.set(i, sn);
+                        }
+
                     }
-
                 }
         }
-        paintSnake();
-        gAdapt.updateDat(nums);
+        if(!gameOver) {
+            paintSnake();
+            gAdapt.updateDat(nums);
+        }
     }
 
     public void initVals(){
