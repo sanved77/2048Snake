@@ -20,4 +20,5 @@
     <color name="bg1024">#edce71</color>
     <color name="bg2048">#edce71</color>
     <color name="yellow">#eadc55</color>
+    <color name="transWhite">#99ffffff</color>
 </resources>
