@@ -30,68 +30,68 @@ public class GridAdapter extends BaseAdapter {
 
         View gridView;
 
-        if (convertView == null) {
-
-            gridView = new View(context);
-
-            // get layout from grid_item.xml
-            gridView = inflater.inflate(R.layout.list_item, null);
-            CardView cv1 = gridView.findViewById(R.id.cv1);
-            switch(nums[position]){
-                case 1:
-                    cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.bg0));
-                    break;
-                case 2:
-                    cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.bg2));
-                    break;
-                case 4:
-                    cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.bg4));
-                    break;
-                case 8:
-                    cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.bg8));
-                    break;
-                case 16:
-                    cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.bg16));
-                    break;
-                case 32:
-                    cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.bg32));
-                    break;
-                case 64:
-                    cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.bg64));
-                    break;
-                case 128:
-                    cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.bg128));
-                    break;
-                case 256:
-                    cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.bg256));
-                    break;
-                case 512:
-                    cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.bg512));
-                    break;
-                case 1024:
-                    cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.bg1024));
-                    break;
-                case 2048:
-                    cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.bg2048));
-                    break;
-            }
-            // set value into textview
-            TextView textView = (TextView) gridView
-                    .findViewById(R.id.tvNum);
-            if(nums[position] > 1000){
-                textView.setTextSize(18);
-            }else if(nums[position] > 100){
-                textView.setTextSize(24);
-            }else {
-                textView.setTextSize(25);
-            }
-            if(nums[position] != 1)
-               textView.setText("" + nums[position]);
-
+        /*if (convertView == null) {
 
         } else {
             gridView = (View) convertView;
+        }*/
+
+        gridView = new View(context);
+
+        // get layout from grid_item.xml
+        gridView = inflater.inflate(R.layout.list_item, null);
+        CardView cv1 = gridView.findViewById(R.id.cv1);
+        switch(nums[position]){
+            case 1:
+                cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.bg0));
+                break;
+            case 2:
+                cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.bg2));
+                break;
+            case 4:
+                cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.bg4));
+                break;
+            case 8:
+                cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.bg8));
+                break;
+            case 16:
+                cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.bg16));
+                break;
+            case 32:
+                cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.bg32));
+                break;
+            case 64:
+                cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.bg64));
+                break;
+            case 128:
+                cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.bg128));
+                break;
+            case 256:
+                cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.bg256));
+                break;
+            case 512:
+                cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.bg512));
+                break;
+            case 1024:
+                cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.bg1024));
+                break;
+            case 2048:
+                cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.bg2048));
+                break;
         }
+        // set value into textview
+        TextView textView = (TextView) gridView
+                .findViewById(R.id.tvNum);
+        if(nums[position] > 1000){
+            textView.setTextSize(18);
+        }else if(nums[position] > 100){
+            textView.setTextSize(24);
+        }else {
+            textView.setTextSize(25);
+        }
+        if(nums[position] != 1)
+            textView.setText("" + nums[position]);
+
 
         return gridView;
     }
@@ -104,6 +104,11 @@ public class GridAdapter extends BaseAdapter {
     @Override
     public Object getItem(int position) {
         return null;
+    }
+
+    public void updateDat(int nums[]){
+        this.nums = nums;
+        notifyDataSetChanged();
     }
 
     @Override

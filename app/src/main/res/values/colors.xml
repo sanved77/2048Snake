@@ -19,4 +19,5 @@
     <color name="bg512">#e4c02a</color>
     <color name="bg1024">#edce71</color>
     <color name="bg2048">#edce71</color>
+    <color name="yellow">#eadc55</color>
 </resources>
