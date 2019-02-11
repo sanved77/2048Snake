@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     GridAdapter gAdapt;
     FloatingActionButton up, down, left, right;
     int posi = 3;
-    ArrayList<Integer> snake;
+    ArrayList<SnakeBod> snake;
 
     private String[] alphabets = new String[26];
     private int nums[] = new int[48];
@@ -56,8 +56,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        int temp;
+        int temp, temp2, i, flicka = 1;
         switch(v.getId()){
+            /*
+            Single sprite
             case R.id.fabUp:
                 temp = nums[posi];
                 nums[posi] = 1;
@@ -81,7 +83,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 nums[posi] = 1;
                 posi += 1;
                 nums[posi] = temp;
+                break;*/
+
+            /*case R.id.fabUp:
+                for(i = 0 ; i < snake.size(); i++){
+
+                }
                 break;
+            case R.id.fabDown:
+                for(i = 0 ; i < snake.size(); i++){
+
+                    if(i == 0){
+                        temp = 0;
+                        snake.add(0,snake.get(0) + 6);
+                    }else{
+                        if(flicka == 1){
+                             temp2 = i;
+                             snake.add(temp, )
+                        }else{
+
+                        }
+                    }
+
+                }
+                break;
+            case R.id.fabLeft:
+                temp = nums[posi];
+                nums[posi] = 1;
+                posi -= 1;
+                nums[posi] = temp;
+                break;
+            case R.id.fabRight:
+                temp = nums[posi];
+                nums[posi] = 1;
+                posi += 1;
+                nums[posi] = temp;
+                break;*/
         }
         gAdapt.updateDat(nums);
     }
@@ -116,6 +153,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void putSnake(){
 
+        snake.add(new SnakeBod(5,2));
+        snake.add(new SnakeBod(4,4));
+        snake.add(new SnakeBod(3,64));
+        snake.add(new SnakeBod(9,16));
+        snake.add(new SnakeBod(15,128));
+
+        paintSnake();
+
+    }
+
+    public void paintSnake(){
+        for(int i = 0; i < snake.size(); i++){
+            nums[snake.get(i).getPosi()] = snake.get(i).getNum();
+        }
     }
 
 
