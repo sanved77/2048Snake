@@ -11,6 +11,7 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        int temp, temp2, i, flicka = 1;
+        int tempPosi, tempNum, newPosi, temp2, i, flicka = 1;
         switch(v.getId()){
             /*
             Single sprite
@@ -85,8 +86,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 nums[posi] = temp;
                 break;*/
 
-            /*case R.id.fabUp:
+            case R.id.fabUp:
                 for(i = 0 ; i < snake.size(); i++){
+
+                    if(i == 0){
+                        tempPosi = snake.get(0).getPosi();
+                        tempNum = snake.get(0).getNum();
+                        SnakeBod sn = new SnakeBod(tempPosi-6,tempPosi,tempNum);
+                        snake.set(0,sn);
+                    }else{
+                        tempNum = snake.get(i).getNum();
+                        tempPosi = snake.get(i).getPosi();
+                        newPosi = snake.get(i-1).getOldPosi();
+                        SnakeBod sn = new SnakeBod(newPosi,tempPosi,tempNum);
+                        snake.set(i,sn);
+                    }
 
                 }
                 break;
@@ -94,32 +108,57 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 for(i = 0 ; i < snake.size(); i++){
 
                     if(i == 0){
-                        temp = 0;
-                        snake.add(0,snake.get(0) + 6);
+                        tempPosi = snake.get(0).getPosi();
+                        tempNum = snake.get(0).getNum();
+                        SnakeBod sn = new SnakeBod(tempPosi+6,tempPosi,tempNum);
+                        snake.set(0,sn);
                     }else{
-                        if(flicka == 1){
-                             temp2 = i;
-                             snake.add(temp, )
-                        }else{
-
-                        }
+                        tempNum = snake.get(i).getNum();
+                        tempPosi = snake.get(i).getPosi();
+                        newPosi = snake.get(i-1).getOldPosi();
+                        SnakeBod sn = new SnakeBod(newPosi,tempPosi,tempNum);
+                        snake.set(i,sn);
                     }
 
                 }
                 break;
             case R.id.fabLeft:
-                temp = nums[posi];
-                nums[posi] = 1;
-                posi -= 1;
-                nums[posi] = temp;
+                for(i = 0 ; i < snake.size(); i++){
+
+                    if(i == 0){
+                        tempPosi = snake.get(0).getPosi();
+                        tempNum = snake.get(0).getNum();
+                        SnakeBod sn = new SnakeBod(tempPosi-1,tempPosi,tempNum);
+                        snake.set(0,sn);
+                    }else{
+                        tempNum = snake.get(i).getNum();
+                        tempPosi = snake.get(i).getPosi();
+                        newPosi = snake.get(i-1).getOldPosi();
+                        SnakeBod sn = new SnakeBod(newPosi,tempPosi,tempNum);
+                        snake.set(i,sn);
+                    }
+
+                }
                 break;
             case R.id.fabRight:
-                temp = nums[posi];
-                nums[posi] = 1;
-                posi += 1;
-                nums[posi] = temp;
-                break;*/
+                for(i = 0 ; i < snake.size(); i++){
+
+                    if(i == 0){
+                        tempPosi = snake.get(0).getPosi();
+                        tempNum = snake.get(0).getNum();
+                        SnakeBod sn = new SnakeBod(tempPosi+1,tempPosi,tempNum);
+                        snake.set(0,sn);
+                    }else{
+                        tempNum = snake.get(i).getNum();
+                        tempPosi = snake.get(i).getPosi();
+                        newPosi = snake.get(i-1).getOldPosi();
+                        SnakeBod sn = new SnakeBod(newPosi,tempPosi,tempNum);
+                        snake.set(i,sn);
+                    }
+
+                }
         }
+        paintSnake();
         gAdapt.updateDat(nums);
     }
 
@@ -153,17 +192,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void putSnake(){
 
-        snake.add(new SnakeBod(5,2));
-        snake.add(new SnakeBod(4,4));
-        snake.add(new SnakeBod(3,64));
-        snake.add(new SnakeBod(9,16));
-        snake.add(new SnakeBod(15,128));
+        snake.add(new SnakeBod(5,5,2));
+        snake.add(new SnakeBod(4,4,4));
+        snake.add(new SnakeBod(3,3,64));
+        snake.add(new SnakeBod(9,9,16));
+        snake.add(new SnakeBod(15,15,128));
 
         paintSnake();
 
     }
 
     public void paintSnake(){
+        Arrays.fill(nums, 1);
         for(int i = 0; i < snake.size(); i++){
             nums[snake.get(i).getPosi()] = snake.get(i).getNum();
         }

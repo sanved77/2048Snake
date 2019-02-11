@@ -6,10 +6,10 @@ public class SnakeBod {
     int num;
     int oldPosi;
 
-    SnakeBod(int posi, int num){
+    SnakeBod(int posi, int oldPosi, int num){
         this.posi = posi;
         this.num = num;
-        oldPosi = posi;
+        this.oldPosi = oldPosi;
     }
 
     public int getNum() {
