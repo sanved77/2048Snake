@@ -75,9 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(runnable, SNAKE_SPEED);
 
-        makeFood();
-        makeFood();
-        makeFood();
+        //makeFood();
 
     }
 
@@ -143,15 +141,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             tempNum = snake.get(0).getNum();
                             SnakeBod sn = new SnakeBod(tempPosi - 6, tempPosi, tempNum);
                             snake.set(0, sn);
+                            // Check if landed on a number
+                            if (nums[snake.get(0).getPosi()] != 1) {
 
-                            if (foodArr[snake.get(0).getPosi()] != 1) {
-                                foodDigest.add(new Food(snake.get(0).getPosi(), foodArr[snake.get(0).getPosi()]));
-                                FOOD_STACK[++stack_ptr] = stack_ptr;
-                                foodArr[snake.get(0).getPosi()] = 1; // Food taken away
-                                makeFood();
-                            } else if (snake.get(0).getPosi()) {
+                                // Check if food or snake body
 
+                                if (foodArr[snake.get(0).getPosi()] != 1) {
+                                    // If food
+                                    foodDigest.add(new Food(snake.get(0).getPosi(), foodArr[snake.get(0).getPosi()]));
+                                    FOOD_STACK[++stack_ptr] = stack_ptr;
+                                    foodArr[snake.get(0).getPosi()] = 1; // Food taken away
+                                    makeFood();
+                                } else {
+                                    // if body
+                                    int posi = snake.get(0).getPosi();
+                                    int hit = 0;
+                                    for (int j = 2; j < snake.size(); j++) {
+                                        if (snake.get(j).getPosi() == posi) {
+                                            // the part where snake hit
+                                            hit = j;
+                                            break;
+                                        }
+                                    }
+                                    if (stack_ptr != -1) {
+                                        // check if digesting food exists
+                                        for (int k = 0; k < foodDigest.size(); k++) {
+                                            // for every digesting food, checks if posi lies on the dead snake
+                                            for (int j = hit; j < snake.size(); j++) {
+                                                // Will check if k.posi matches dead snake posi
+                                                if (foodDigest.get(k).getPosi() == snake.get(j).getPosi()) {
+                                                    stack_ptr--;
+                                                    foodDigest.remove(k);
+                                                }
+                                            }
+                                        }
+                                    }
+                                    // remove snake body
+                                    for (int l = hit; l < snake.size() - 1; l++) {
+                                        //nums[]
+                                        snake.remove(l);
+                                    }
+                                    snake.subList(hit, snake.size() - 1).clear();
+
+                                }
                             }
+
                         } else {
                             tempNum = snake.get(i).getNum();
                             tempPosi = snake.get(i).getPosi();
@@ -192,11 +226,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             tempNum = snake.get(0).getNum();
                             SnakeBod sn = new SnakeBod(tempPosi + 6, tempPosi, tempNum);
                             snake.set(0, sn);
-                            if (foodArr[snake.get(0).getPosi()] != 1) {
+                            /*if (foodArr[snake.get(0).getPosi()] != 1) {
                                 foodDigest.add(new Food(snake.get(0).getPosi(), foodArr[snake.get(0).getPosi()]));
                                 FOOD_STACK[++stack_ptr] = stack_ptr;
                                 foodArr[snake.get(0).getPosi()] = 1; // Food taken away
                                 makeFood();
+                            }*/
+                            // Check if landed on a number
+                            if (nums[snake.get(0).getPosi()] != 1) {
+
+                                // Check if food or snake body
+
+                                if (foodArr[snake.get(0).getPosi()] != 1) {
+                                    // If food
+                                    foodDigest.add(new Food(snake.get(0).getPosi(), foodArr[snake.get(0).getPosi()]));
+                                    FOOD_STACK[++stack_ptr] = stack_ptr;
+                                    foodArr[snake.get(0).getPosi()] = 1; // Food taken away
+                                    makeFood();
+                                } else {
+                                    // if body
+                                    int posi = snake.get(0).getPosi();
+                                    int hit = 0;
+                                    for (int j = 2; j < snake.size(); j++) {
+                                        if (snake.get(j).getPosi() == posi) {
+                                            // the part where snake hit
+                                            hit = j;
+                                            break;
+                                        }
+                                    }
+                                    if (stack_ptr != -1) {
+                                        // check if digesting food exists
+                                        for (int k = 0; k < foodDigest.size(); k++) {
+                                            // for every digesting food, checks if posi lies on the dead snake
+                                            for (int j = hit; j < snake.size(); j++) {
+                                                // Will check if k.posi matches dead snake posi
+                                                if (foodDigest.get(k).getPosi() == snake.get(j).getPosi()) {
+                                                    stack_ptr--;
+                                                    foodDigest.remove(k);
+                                                }
+                                            }
+                                        }
+                                    }
+                                    // remove snake body
+                                    snake.subList(hit, snake.size() - 1).clear();
+
+                                }
                             }
                         } else {
                             tempNum = snake.get(i).getNum();
@@ -238,11 +312,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             tempNum = snake.get(0).getNum();
                             SnakeBod sn = new SnakeBod(tempPosi - 1, tempPosi, tempNum);
                             snake.set(0, sn);
-                            if (foodArr[snake.get(0).getPosi()] != 1) {
-                                foodDigest.add(new Food(snake.get(0).getPosi(), foodArr[snake.get(0).getPosi()]));
-                                FOOD_STACK[++stack_ptr] = stack_ptr;
-                                foodArr[snake.get(0).getPosi()] = 1; // Food taken away
-                                makeFood();
+                            // Check if landed on a number
+                            if (nums[snake.get(0).getPosi()] != 1) {
+
+                                // Check if food or snake body
+
+                                if (foodArr[snake.get(0).getPosi()] != 1) {
+                                    // If food
+                                    foodDigest.add(new Food(snake.get(0).getPosi(), foodArr[snake.get(0).getPosi()]));
+                                    FOOD_STACK[++stack_ptr] = stack_ptr;
+                                    foodArr[snake.get(0).getPosi()] = 1; // Food taken away
+                                    makeFood();
+                                } else {
+                                    // if body
+                                    int posi = snake.get(0).getPosi();
+                                    int hit = 0;
+                                    for (int j = 2; j < snake.size(); j++) {
+                                        if (snake.get(j).getPosi() == posi) {
+                                            // the part where snake hit
+                                            hit = j;
+                                            break;
+                                        }
+                                    }
+                                    if (stack_ptr != -1) {
+                                        // check if digesting food exists
+                                        for (int k = 0; k < foodDigest.size(); k++) {
+                                            // for every digesting food, checks if posi lies on the dead snake
+                                            for (int j = hit; j < snake.size(); j++) {
+                                                // Will check if k.posi matches dead snake posi
+                                                if (foodDigest.get(k).getPosi() == snake.get(j).getPosi()) {
+                                                    stack_ptr--;
+                                                    foodDigest.remove(k);
+                                                }
+                                            }
+                                        }
+                                    }
+                                    // remove snake body
+                                    snake.subList(hit, snake.size() - 1).clear();
+
+                                }
                             }
                         } else {
                             tempNum = snake.get(i).getNum();
@@ -283,11 +391,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             tempNum = snake.get(0).getNum();
                             SnakeBod sn = new SnakeBod(tempPosi + 1, tempPosi, tempNum);
                             snake.set(0, sn);
-                            if (foodArr[snake.get(0).getPosi()] != 1) {
-                                foodDigest.add(new Food(snake.get(0).getPosi(), foodArr[snake.get(0).getPosi()]));
-                                FOOD_STACK[++stack_ptr] = stack_ptr;
-                                foodArr[snake.get(0).getPosi()] = 1; // Food taken away
-                                makeFood();
+                            // Check if landed on a number
+                            if (nums[snake.get(0).getPosi()] != 1) {
+
+                                // Check if food or snake body
+
+                                if (foodArr[snake.get(0).getPosi()] != 1) {
+                                    // If food
+                                    foodDigest.add(new Food(snake.get(0).getPosi(), foodArr[snake.get(0).getPosi()]));
+                                    FOOD_STACK[++stack_ptr] = stack_ptr;
+                                    foodArr[snake.get(0).getPosi()] = 1; // Food taken away
+                                    makeFood();
+                                } else {
+                                    // if body
+                                    int posi = snake.get(0).getPosi();
+                                    int hit = 0;
+                                    for (int j = 2; j < snake.size(); j++) {
+                                        if (snake.get(j).getPosi() == posi) {
+                                            // the part where snake hit
+                                            hit = j;
+                                            break;
+                                        }
+                                    }
+                                    if (stack_ptr != -1) {
+                                        // check if digesting food exists
+                                        for (int k = 0; k < foodDigest.size(); k++) {
+                                            // for every digesting food, checks if posi lies on the dead snake
+                                            for (int j = hit; j < snake.size(); j++) {
+                                                // Will check if k.posi matches dead snake posi
+                                                if (foodDigest.get(k).getPosi() == snake.get(j).getPosi()) {
+                                                    stack_ptr--;
+                                                    foodDigest.remove(k);
+                                                }
+                                            }
+                                        }
+                                    }
+                                    // remove snake body
+                                    snake.subList(hit, snake.size() - 1).clear();
+
+                                }
                             }
                         } else {
                             tempNum = snake.get(i).getNum();
@@ -381,6 +523,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         snake.add(new SnakeBod(3,3,64));
         snake.add(new SnakeBod(9,9,16));
         snake.add(new SnakeBod(15,15,128));
+        snake.add(new SnakeBod(14, 15, 1024));
+        snake.add(new SnakeBod(13, 15, 32));
+        snake.add(new SnakeBod(12, 15, 2048));
 
         paintSnake();
 
