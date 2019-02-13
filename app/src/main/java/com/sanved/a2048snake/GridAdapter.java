@@ -15,15 +15,15 @@ public class GridAdapter extends BaseAdapter {
     private Context context;
     private int nums[];
     private final String[] alphabets = new String[26];
-    private ArrayList<Integer> foodDigest;
+    private ArrayList<Food> foodDigest;
 
     //private static int count;
 
 
-    public GridAdapter(Context context, int nums[]) {
+    public GridAdapter(Context context, int nums[], ArrayList<Food> foodDigest) {
         this.context = context;
         this.nums = nums;
-        //this.foodDigest = foodDigest;
+        this.foodDigest = foodDigest;
         fillAlphabets();
     }
 
@@ -45,6 +45,7 @@ public class GridAdapter extends BaseAdapter {
         // get layout from grid_item.xml
         gridView = inflater.inflate(R.layout.list_item, null);
         CardView cv1 = gridView.findViewById(R.id.cv1);
+
         switch(nums[position]){
             case 1:
                 cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.bg0));
@@ -83,9 +84,18 @@ public class GridAdapter extends BaseAdapter {
                 cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.bg2048));
                 break;
         }
-        // set value into textview
+
         TextView textView = gridView
                 .findViewById(R.id.tvNum);
+
+        for (int i = 0; i < foodDigest.size(); i++) {
+            if (position == foodDigest.get(i).getPosi()) {
+                cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.green));
+                textView.setTextColor(ContextCompat.getColor(context, R.color.white));
+            }
+        }
+        // set value into textview
+
         if(nums[position] > 1000){
             textView.setTextSize(18);
         }else if(nums[position] > 100){
@@ -110,15 +120,12 @@ public class GridAdapter extends BaseAdapter {
         return null;
     }
 
-    public void updateDat(int nums[]){
+    public void updateDat(int nums[], ArrayList<Food> foodDigest) {
         this.nums = nums;
+        this.foodDigest = foodDigest;
         notifyDataSetChanged();
     }
 
-    public void updateDat(int nums[], int newFood) {
-        foodDigest.add(newFood);
-        updateDat(nums);
-    }
 
     @Override
     public long getItemId(int position) {

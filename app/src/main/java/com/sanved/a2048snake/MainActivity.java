@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         testData();
         putSnake();
 
-        gAdapt = new GridAdapter(this, nums);
+        gAdapt = new GridAdapter(this, nums, foodDigest);
 
         grid.setAdapter(gAdapt);
 
@@ -143,10 +143,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             tempNum = snake.get(0).getNum();
                             SnakeBod sn = new SnakeBod(tempPosi - 6, tempPosi, tempNum);
                             snake.set(0, sn);
+
                             if (foodArr[snake.get(0).getPosi()] != 1) {
                                 foodDigest.add(new Food(snake.get(0).getPosi(), foodArr[snake.get(0).getPosi()]));
                                 FOOD_STACK[++stack_ptr] = stack_ptr;
                                 foodArr[snake.get(0).getPosi()] = 1; // Food taken away
+                                makeFood();
+                            } else if (snake.get(0).getPosi()) {
+
                             }
                         } else {
                             tempNum = snake.get(i).getNum();
@@ -192,6 +196,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 foodDigest.add(new Food(snake.get(0).getPosi(), foodArr[snake.get(0).getPosi()]));
                                 FOOD_STACK[++stack_ptr] = stack_ptr;
                                 foodArr[snake.get(0).getPosi()] = 1; // Food taken away
+                                makeFood();
                             }
                         } else {
                             tempNum = snake.get(i).getNum();
@@ -237,6 +242,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 foodDigest.add(new Food(snake.get(0).getPosi(), foodArr[snake.get(0).getPosi()]));
                                 FOOD_STACK[++stack_ptr] = stack_ptr;
                                 foodArr[snake.get(0).getPosi()] = 1; // Food taken away
+                                makeFood();
                             }
                         } else {
                             tempNum = snake.get(i).getNum();
@@ -281,6 +287,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 foodDigest.add(new Food(snake.get(0).getPosi(), foodArr[snake.get(0).getPosi()]));
                                 FOOD_STACK[++stack_ptr] = stack_ptr;
                                 foodArr[snake.get(0).getPosi()] = 1; // Food taken away
+                                makeFood();
                             }
                         } else {
                             tempNum = snake.get(i).getNum();
@@ -310,7 +317,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         if(!gameOver) {
             paintSnake();
-            gAdapt.updateDat(nums);
+            gAdapt.updateDat(nums, foodDigest);
 
         }else{
             // Game Over
@@ -413,7 +420,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         }
-        gAdapt.updateDat(nums);
+        gAdapt.updateDat(nums, foodDigest);
 
     }
 
