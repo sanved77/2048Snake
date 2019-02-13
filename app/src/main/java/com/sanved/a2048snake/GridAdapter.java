@@ -9,10 +9,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class GridAdapter extends BaseAdapter {
     private Context context;
     private int nums[];
     private final String[] alphabets = new String[26];
+    ArrayList<Integer> foodDigest = new ArrayList<>();
 
     //private static int count;
 
@@ -80,7 +83,7 @@ public class GridAdapter extends BaseAdapter {
                 break;
         }
         // set value into textview
-        TextView textView = (TextView) gridView
+        TextView textView = gridView
                 .findViewById(R.id.tvNum);
         if(nums[position] > 1000){
             textView.setTextSize(18);
@@ -109,6 +112,11 @@ public class GridAdapter extends BaseAdapter {
     public void updateDat(int nums[]){
         this.nums = nums;
         notifyDataSetChanged();
+    }
+
+    public void updateDat(int nums[], int newFood) {
+        foodDigest.add(newFood);
+        updateDat(nums);
     }
 
     @Override

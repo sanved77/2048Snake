@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -28,13 +29,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Random rand2;
     TextView tvGameOver;
 
+    private static int SNAKE_SPEED = 700;
+    int foodArr[] = new int[48];
+    private int FOOD_STACK[] = new int[15];
+    // If 1, no food. If 2^n, then food there at 2^n levels
+
     boolean gameOver = false;
     int posi = 3;
     ArrayList<SnakeBod> snake;
-    private static int DIRECTION = 3;
+    private int stack_ptr = -1;
     private String[] alphabets = new String[26];
     private int nums[] = new int[48];
-    private static int SNAKE_SPEED = 500;
+    private int DIRECTION = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,8 +92,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     };
 
-
-
     @Override
     public void onClick(View v) {
 
@@ -110,6 +114,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
 
+        paintCanvas();
+        handler.removeCallbacks(runnable);
+        handler.postDelayed(runnable, SNAKE_SPEED);
+
     }
 
     public void paintCanvas(){
@@ -126,12 +134,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 if(snake.get(0).getPosi() >= 0 && snake.get(0).getPosi() <= 5){
                     gameOver = true;
-
-                }
-                else {
+                } else {
                     for (i = 0; i < snake.size(); i++) {
 
                         if (i == 0) {
+
                             tempPosi = snake.get(0).getPosi();
                             tempNum = snake.get(0).getNum();
                             SnakeBod sn = new SnakeBod(tempPosi - 6, tempPosi, tempNum);
@@ -143,6 +150,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             SnakeBod sn = new SnakeBod(newPosi, tempPosi, tempNum);
                             snake.set(i, sn);
                             if(i == snake.size() - 1){
+                                // Place a 1 to indicate an empty mat
                                 nums[snake.get(i).getOldPosi()] = 1;
                             }
                         }
@@ -236,7 +244,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(!gameOver) {
             paintSnake();
             gAdapt.updateDat(nums);
+
         }else{
+            // Game Over
             tvGameOver.setVisibility(View.VISIBLE);
             up.hide();
             down.hide();
@@ -248,6 +258,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } else {
                 v.vibrate(500);
             }
+            DIRECTION = 3;
         }
     }
 
@@ -268,6 +279,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rand2 = new Random();
 
         tvGameOver = findViewById(R.id.tvGameOver);
+
+        Arrays.fill(foodArr, 1); // Empty mat with no food
 
     }
 
@@ -313,17 +326,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 switch (rnd){
                     case 0:
                         nums[n] = 2;
+                        foodArr[n] = 2;
                         break;
 
                     case 1:
                         nums[n] = 4;
+                        foodArr[n] = 4;
                         break;
 
                     case 2:
                         nums[n] = 8;
+                        foodArr[n] = 8;
                         break;
                 }
                 break;
+
             }
 
         }

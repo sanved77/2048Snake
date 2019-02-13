@@ -6,6 +6,8 @@ public class SnakeBod {
     int num;
     int oldPosi;
 
+    boolean isHead, isTail;
+
     SnakeBod(int posi, int oldPosi, int num){
         this.posi = posi;
         this.num = num;

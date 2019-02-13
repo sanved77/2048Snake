@@ -57,18 +57,11 @@
         android:numColumns="6"
         />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:backgroundTint="@color/bg"
-        android:layout_height="6dp">
-
-    </LinearLayout>
-
     <android.support.design.widget.CoordinatorLayout
-        android:layout_width="180dp"
-        android:layout_height="180dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_gravity="center"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         >
 
         <TextView
@@ -85,6 +78,7 @@
             android:id="@+id/fabUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:fabCustomSize="72dp"
             android:layout_gravity="center_horizontal|top"
             android:src="@drawable/baseline_keyboard_arrow_up_black_48"
             android:backgroundTint="@color/yellow"
@@ -95,6 +89,7 @@
             android:id="@+id/fabLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:fabCustomSize="72dp"
             android:layout_gravity="center_vertical|left"
             android:src="@drawable/baseline_keyboard_arrow_left_black_48"
             android:backgroundTint="@color/yellow"
@@ -105,6 +100,7 @@
             android:id="@+id/fabRight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:fabCustomSize="72dp"
             android:layout_gravity="center_vertical|right"
             android:src="@drawable/baseline_keyboard_arrow_right_black_48"
             android:backgroundTint="@color/yellow"
@@ -115,6 +111,7 @@
             android:id="@+id/fabDown"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:fabCustomSize="72dp"
             android:layout_gravity="center_horizontal|bottom"
             android:src="@drawable/baseline_keyboard_arrow_down_black_48"
             android:backgroundTint="@color/yellow"
