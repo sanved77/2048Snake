@@ -30,10 +30,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView tvGameOver;
 
     private static int SNAKE_SPEED = 700;
+    // More the speed, slower the snake
     int foodArr[] = new int[48];
     private int FOOD_STACK[] = new int[15];
     // If 1, no food. If 2^n, then food there at 2^n levels
-
+    private ArrayList<Food> foodDigest;
     boolean gameOver = false;
     int posi = 3;
     ArrayList<SnakeBod> snake;
@@ -138,11 +139,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     for (i = 0; i < snake.size(); i++) {
 
                         if (i == 0) {
-
                             tempPosi = snake.get(0).getPosi();
                             tempNum = snake.get(0).getNum();
                             SnakeBod sn = new SnakeBod(tempPosi - 6, tempPosi, tempNum);
                             snake.set(0, sn);
+                            if (foodArr[snake.get(0).getPosi()] != 1) {
+                                foodDigest.add(new Food(snake.get(0).getPosi(), foodArr[snake.get(0).getPosi()]));
+                                FOOD_STACK[++stack_ptr] = stack_ptr;
+                                foodArr[snake.get(0).getPosi()] = 1; // Food taken away
+                            }
                         } else {
                             tempNum = snake.get(i).getNum();
                             tempPosi = snake.get(i).getPosi();
@@ -150,8 +155,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             SnakeBod sn = new SnakeBod(newPosi, tempPosi, tempNum);
                             snake.set(i, sn);
                             if(i == snake.size() - 1){
-                                // Place a 1 to indicate an empty mat
-                                nums[snake.get(i).getOldPosi()] = 1;
+                                if (stack_ptr != -1) {
+                                    if (foodDigest.get(0).getPosi() == snake.get(i).getOldPosi()) {
+                                        Food f = foodDigest.get(0);
+                                        SnakeBod sn2 = new SnakeBod(f.getPosi(), f.getPosi(), f.getWeight());
+                                        snake.add(sn2);
+                                        foodDigest.remove(0);
+                                        stack_ptr--;
+                                    } else
+                                        nums[snake.get(i).getOldPosi()] = 1;
+                                } else {
+                                    // Place a 1 to indicate an empty mat
+                                    nums[snake.get(i).getOldPosi()] = 1;
+                                }
                             }
                         }
 
@@ -172,6 +188,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             tempNum = snake.get(0).getNum();
                             SnakeBod sn = new SnakeBod(tempPosi + 6, tempPosi, tempNum);
                             snake.set(0, sn);
+                            if (foodArr[snake.get(0).getPosi()] != 1) {
+                                foodDigest.add(new Food(snake.get(0).getPosi(), foodArr[snake.get(0).getPosi()]));
+                                FOOD_STACK[++stack_ptr] = stack_ptr;
+                                foodArr[snake.get(0).getPosi()] = 1; // Food taken away
+                            }
                         } else {
                             tempNum = snake.get(i).getNum();
                             tempPosi = snake.get(i).getPosi();
@@ -179,7 +200,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             SnakeBod sn = new SnakeBod(newPosi, tempPosi, tempNum);
                             snake.set(i, sn);
                             if(i == snake.size() - 1){
-                                nums[snake.get(i).getOldPosi()] = 1;
+                                if (stack_ptr != -1) {
+                                    if (foodDigest.get(0).getPosi() == snake.get(i).getOldPosi()) {
+                                        Food f = foodDigest.get(0);
+                                        SnakeBod sn2 = new SnakeBod(f.getPosi(), f.getPosi(), f.getWeight());
+                                        snake.add(sn2);
+                                        foodDigest.remove(0);
+                                        stack_ptr--;
+                                    } else
+                                        nums[snake.get(i).getOldPosi()] = 1;
+                                } else {
+                                    // Place a 1 to indicate an empty mat
+                                    nums[snake.get(i).getOldPosi()] = 1;
+                                }
                             }
                         }
 
@@ -200,6 +233,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             tempNum = snake.get(0).getNum();
                             SnakeBod sn = new SnakeBod(tempPosi - 1, tempPosi, tempNum);
                             snake.set(0, sn);
+                            if (foodArr[snake.get(0).getPosi()] != 1) {
+                                foodDigest.add(new Food(snake.get(0).getPosi(), foodArr[snake.get(0).getPosi()]));
+                                FOOD_STACK[++stack_ptr] = stack_ptr;
+                                foodArr[snake.get(0).getPosi()] = 1; // Food taken away
+                            }
                         } else {
                             tempNum = snake.get(i).getNum();
                             tempPosi = snake.get(i).getPosi();
@@ -207,7 +245,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             SnakeBod sn = new SnakeBod(newPosi, tempPosi, tempNum);
                             snake.set(i, sn);
                             if(i == snake.size() - 1){
-                                nums[snake.get(i).getOldPosi()] = 1;
+                                if (stack_ptr != -1) {
+                                    if (foodDigest.get(0).getPosi() == snake.get(i).getOldPosi()) {
+                                        Food f = foodDigest.get(0);
+                                        SnakeBod sn2 = new SnakeBod(f.getPosi(), f.getPosi(), f.getWeight());
+                                        snake.add(sn2);
+                                        foodDigest.remove(0);
+                                        stack_ptr--;
+                                    } else
+                                        nums[snake.get(i).getOldPosi()] = 1;
+                                } else {
+                                    // Place a 1 to indicate an empty mat
+                                    nums[snake.get(i).getOldPosi()] = 1;
+                                }
                             }
                         }
 
@@ -227,6 +277,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             tempNum = snake.get(0).getNum();
                             SnakeBod sn = new SnakeBod(tempPosi + 1, tempPosi, tempNum);
                             snake.set(0, sn);
+                            if (foodArr[snake.get(0).getPosi()] != 1) {
+                                foodDigest.add(new Food(snake.get(0).getPosi(), foodArr[snake.get(0).getPosi()]));
+                                FOOD_STACK[++stack_ptr] = stack_ptr;
+                                foodArr[snake.get(0).getPosi()] = 1; // Food taken away
+                            }
                         } else {
                             tempNum = snake.get(i).getNum();
                             tempPosi = snake.get(i).getPosi();
@@ -234,7 +289,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             SnakeBod sn = new SnakeBod(newPosi, tempPosi, tempNum);
                             snake.set(i, sn);
                             if(i == snake.size() - 1){
-                                nums[snake.get(i).getOldPosi()] = 1;
+                                if (stack_ptr != -1) {
+                                    if (foodDigest.get(0).getPosi() == snake.get(i).getOldPosi()) {
+                                        Food f = foodDigest.get(0);
+                                        SnakeBod sn2 = new SnakeBod(f.getPosi(), f.getPosi(), f.getWeight());
+                                        snake.add(sn2);
+                                        foodDigest.remove(0);
+                                        stack_ptr--;
+                                    } else
+                                        nums[snake.get(i).getOldPosi()] = 1;
+                                } else {
+                                    // Place a 1 to indicate an empty mat
+                                    nums[snake.get(i).getOldPosi()] = 1;
+                                }
                             }
                         }
 
@@ -281,6 +348,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tvGameOver = findViewById(R.id.tvGameOver);
 
         Arrays.fill(foodArr, 1); // Empty mat with no food
+
+        foodDigest = new ArrayList<>();
 
     }
 

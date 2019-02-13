@@ -15,7 +15,7 @@ public class GridAdapter extends BaseAdapter {
     private Context context;
     private int nums[];
     private final String[] alphabets = new String[26];
-    ArrayList<Integer> foodDigest = new ArrayList<>();
+    private ArrayList<Integer> foodDigest;
 
     //private static int count;
 
@@ -23,6 +23,7 @@ public class GridAdapter extends BaseAdapter {
     public GridAdapter(Context context, int nums[]) {
         this.context = context;
         this.nums = nums;
+        //this.foodDigest = foodDigest;
         fillAlphabets();
     }
 
