@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(runnable, SNAKE_SPEED);
 
-        //makeFood();
+        makeFood();
 
     }
 
@@ -97,18 +97,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch(v.getId()){
 
             case R.id.fabUp:
-                DIRECTION = 1;
+                if (DIRECTION == 3) break;
+                else DIRECTION = 1;
                 break;
 
             case R.id.fabDown:
+                if (DIRECTION == 1) break;
                 DIRECTION = 3;
                 break;
 
             case R.id.fabLeft:
+                if (DIRECTION == 2) break;
                 DIRECTION = 4;
                 break;
 
             case R.id.fabRight:
+                if (DIRECTION == 4) break;
                 DIRECTION = 2;
                 break;
         }
@@ -177,11 +181,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                         }
                                     }
                                     // remove snake body
-                                    for (int l = hit; l < snake.size() - 1; l++) {
-                                        //nums[]
-                                        snake.remove(l);
+                                    for (int l = hit; l < snake.size(); l++) {
+                                        nums[snake.get(l).getPosi()] = 1;
                                     }
-                                    snake.subList(hit, snake.size() - 1).clear();
+
+                                    snake.subList(hit, snake.size()).clear();
 
                                 }
                             }
@@ -268,7 +272,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                         }
                                     }
                                     // remove snake body
-                                    snake.subList(hit, snake.size() - 1).clear();
+                                    for (int l = hit; l < snake.size(); l++) {
+                                        nums[snake.get(l).getPosi()] = 1;
+                                    }
+
+                                    snake.subList(hit, snake.size()).clear();
 
                                 }
                             }
@@ -348,7 +356,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                         }
                                     }
                                     // remove snake body
-                                    snake.subList(hit, snake.size() - 1).clear();
+                                    for (int l = hit; l < snake.size(); l++) {
+                                        nums[snake.get(l).getPosi()] = 1;
+                                    }
+
+                                    snake.subList(hit, snake.size()).clear();
 
                                 }
                             }
@@ -427,7 +439,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                         }
                                     }
                                     // remove snake body
-                                    snake.subList(hit, snake.size() - 1).clear();
+                                    for (int l = hit; l < snake.size(); l++) {
+                                        nums[snake.get(l).getPosi()] = 1;
+                                    }
+
+                                    snake.subList(hit, snake.size()).clear();
 
                                 }
                             }
@@ -520,12 +536,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         snake.add(new SnakeBod(5,5,2));
         snake.add(new SnakeBod(4,4,4));
-        snake.add(new SnakeBod(3,3,64));
+        snake.add(new SnakeBod(3, 3, 8));
         snake.add(new SnakeBod(9,9,16));
-        snake.add(new SnakeBod(15,15,128));
-        snake.add(new SnakeBod(14, 15, 1024));
-        snake.add(new SnakeBod(13, 15, 32));
-        snake.add(new SnakeBod(12, 15, 2048));
+        snake.add(new SnakeBod(15, 15, 32));
+        snake.add(new SnakeBod(14, 15, 64));
+        snake.add(new SnakeBod(13, 15, 128));
+        snake.add(new SnakeBod(12, 15, 256));
+        snake.add(new SnakeBod(18, 15, 512));
+        snake.add(new SnakeBod(24, 15, 1024));
+
 
         paintSnake();
 
