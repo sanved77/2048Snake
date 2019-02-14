@@ -29,12 +29,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Random rand2;
     TextView tvGameOver;
 
-    private static int SNAKE_SPEED = 700;
+    private static int SNAKE_SPEED = 800;
     // More the speed, slower the snake
     int foodArr[] = new int[48];
     private int FOOD_STACK[] = new int[15];
     // If 1, no food. If 2^n, then food there at 2^n levels
     private ArrayList<Food> foodDigest;
+    private ArrayList<Integer> foodDeleteQueue;
     boolean gameOver = false;
     int posi = 3;
     ArrayList<SnakeBod> snake;
@@ -167,6 +168,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                             break;
                                         }
                                     }
+                                    SnakeBod sn2 = snake.get(hit);
+                                    foodDigest.add(new Food(snake.get(0).getPosi(), sn2.getNum()));
+                                    FOOD_STACK[++stack_ptr] = stack_ptr;
                                     if (stack_ptr != -1) {
                                         // check if digesting food exists
                                         for (int k = 0; k < foodDigest.size(); k++) {
@@ -175,10 +179,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                                 // Will check if k.posi matches dead snake posi
                                                 if (foodDigest.get(k).getPosi() == snake.get(j).getPosi()) {
                                                     stack_ptr--;
-                                                    foodDigest.remove(k);
+                                                    foodDeleteQueue.add(k);
                                                 }
                                             }
                                         }
+                                        for (int m = 0; m < foodDeleteQueue.size(); m++) {
+                                            int temp = foodDeleteQueue.get(m);
+                                            foodDigest.remove(temp);
+                                        }
+                                        foodDeleteQueue.clear();
                                     }
                                     // remove snake body
                                     for (int l = hit; l < snake.size(); l++) {
@@ -258,6 +267,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                             break;
                                         }
                                     }
+                                    SnakeBod sn2 = snake.get(hit);
+                                    foodDigest.add(new Food(snake.get(0).getPosi(), sn2.getNum()));
+                                    FOOD_STACK[++stack_ptr] = stack_ptr;
                                     if (stack_ptr != -1) {
                                         // check if digesting food exists
                                         for (int k = 0; k < foodDigest.size(); k++) {
@@ -266,10 +278,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                                 // Will check if k.posi matches dead snake posi
                                                 if (foodDigest.get(k).getPosi() == snake.get(j).getPosi()) {
                                                     stack_ptr--;
-                                                    foodDigest.remove(k);
+                                                    foodDeleteQueue.add(k);
                                                 }
                                             }
                                         }
+                                        for (int m = 0; m < foodDeleteQueue.size(); m++) {
+                                            int temp = foodDeleteQueue.get(m);
+                                            foodDigest.remove(temp);
+                                        }
+                                        foodDeleteQueue.clear();
                                     }
                                     // remove snake body
                                     for (int l = hit; l < snake.size(); l++) {
@@ -342,6 +359,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                             break;
                                         }
                                     }
+                                    SnakeBod sn2 = snake.get(hit);
+                                    foodDigest.add(new Food(snake.get(0).getPosi(), sn2.getNum()));
+                                    FOOD_STACK[++stack_ptr] = stack_ptr;
                                     if (stack_ptr != -1) {
                                         // check if digesting food exists
                                         for (int k = 0; k < foodDigest.size(); k++) {
@@ -350,10 +370,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                                 // Will check if k.posi matches dead snake posi
                                                 if (foodDigest.get(k).getPosi() == snake.get(j).getPosi()) {
                                                     stack_ptr--;
-                                                    foodDigest.remove(k);
+                                                    foodDeleteQueue.add(k);
                                                 }
                                             }
                                         }
+                                        for (int m = 0; m < foodDeleteQueue.size(); m++) {
+                                            int temp = foodDeleteQueue.get(m);
+                                            foodDigest.remove(temp);
+                                        }
+                                        foodDeleteQueue.clear();
                                     }
                                     // remove snake body
                                     for (int l = hit; l < snake.size(); l++) {
@@ -425,6 +450,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                             break;
                                         }
                                     }
+                                    SnakeBod sn2 = snake.get(hit);
+                                    foodDigest.add(new Food(snake.get(0).getPosi(), sn2.getNum()));
+                                    FOOD_STACK[++stack_ptr] = stack_ptr;
                                     if (stack_ptr != -1) {
                                         // check if digesting food exists
                                         for (int k = 0; k < foodDigest.size(); k++) {
@@ -433,10 +461,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                                 // Will check if k.posi matches dead snake posi
                                                 if (foodDigest.get(k).getPosi() == snake.get(j).getPosi()) {
                                                     stack_ptr--;
-                                                    foodDigest.remove(k);
+                                                    foodDeleteQueue.add(k);
                                                 }
                                             }
                                         }
+                                        for (int m = 0; m < foodDeleteQueue.size(); m++) {
+                                            int temp = foodDeleteQueue.get(m);
+                                            foodDigest.remove(temp);
+                                        }
+                                        foodDeleteQueue.clear();
                                     }
                                     // remove snake body
                                     for (int l = hit; l < snake.size(); l++) {
@@ -515,6 +548,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Arrays.fill(foodArr, 1); // Empty mat with no food
 
         foodDigest = new ArrayList<>();
+
+        foodDeleteQueue = new ArrayList<>();
 
     }
 
