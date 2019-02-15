@@ -132,6 +132,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         4 - Left
         */
 
+        for (int i = 0; i < snake.size() - 1; i++) {
+            // Check if body has merging elements
+            if (snake.get(i).getNum() == snake.get(i + 1).getNum()) {
+                SnakeBod sn = snake.get(i);
+                sn.setNum(sn.getNum() * 2);
+                snake.set(i, sn);
+                nums[snake.get(i + 1).getPosi()] = 1;
+                /*for(int x = i+1; x <= snake.size() - 1;x++){
+                    int temp = snake.get(x).getPosi();
+                    SnakeBod sn2 = snake.get(x+1);
+                    sn.setNum(snake.get(x).getPosi());
+                    nums[snake.get(x).getPosi()] = 1;
+                    snake.set(x, sn2);
+                }*/
+                snake.remove(i + 1);
+            }
+        }
+
         int tempPosi, tempNum, newPosi, i;
         switch(DIRECTION){
             case 1: // Up
@@ -206,13 +224,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             SnakeBod sn = new SnakeBod(newPosi, tempPosi, tempNum);
                             snake.set(i, sn);
                             if(i == snake.size() - 1){
+                                // Last element
                                 if (stack_ptr != -1) {
                                     if (foodDigest.get(0).getPosi() == snake.get(i).getOldPosi()) {
+                                        // check if food at the end of the snake
                                         Food f = foodDigest.get(0);
-                                        SnakeBod sn2 = new SnakeBod(f.getPosi(), f.getPosi(), f.getWeight());
-                                        snake.add(sn2);
-                                        foodDigest.remove(0);
-                                        stack_ptr--;
+
+                                        if (f.getWeight() == snake.get(snake.size() - 1).getNum()) {
+                                            SnakeBod temp = snake.get(snake.size() - 1);
+                                            SnakeBod sn3 = new SnakeBod(temp.getPosi(), temp.getOldPosi(), temp.getNum() * 2);
+                                            snake.set(snake.size() - 1, sn3);
+                                            foodDigest.remove(0);
+                                            stack_ptr--;
+                                            nums[snake.get(snake.size() - 1).getOldPosi()] = 1;
+                                        } else {
+                                            SnakeBod sn2 = new SnakeBod(f.getPosi(), f.getPosi(), f.getWeight());
+                                            snake.add(sn2);
+                                            foodDigest.remove(0);
+                                            stack_ptr--;
+                                        }
                                     } else
                                         nums[snake.get(i).getOldPosi()] = 1;
                                 } else {
@@ -308,10 +338,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 if (stack_ptr != -1) {
                                     if (foodDigest.get(0).getPosi() == snake.get(i).getOldPosi()) {
                                         Food f = foodDigest.get(0);
-                                        SnakeBod sn2 = new SnakeBod(f.getPosi(), f.getPosi(), f.getWeight());
-                                        snake.add(sn2);
-                                        foodDigest.remove(0);
-                                        stack_ptr--;
+
+                                        if (f.getWeight() == snake.get(snake.size() - 1).getNum()) {
+                                            SnakeBod temp = snake.get(snake.size() - 1);
+                                            SnakeBod sn3 = new SnakeBod(temp.getPosi(), temp.getOldPosi(), temp.getNum() * 2);
+                                            snake.set(snake.size() - 1, sn3);
+                                            foodDigest.remove(0);
+                                            stack_ptr--;
+                                            nums[snake.get(snake.size() - 1).getOldPosi()] = 1;
+                                        } else {
+                                            SnakeBod sn2 = new SnakeBod(f.getPosi(), f.getPosi(), f.getWeight());
+                                            snake.add(sn2);
+                                            foodDigest.remove(0);
+                                            stack_ptr--;
+                                        }
                                     } else
                                         nums[snake.get(i).getOldPosi()] = 1;
                                 } else {
@@ -400,11 +440,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             if(i == snake.size() - 1){
                                 if (stack_ptr != -1) {
                                     if (foodDigest.get(0).getPosi() == snake.get(i).getOldPosi()) {
-                                        Food f = foodDigest.get(0);
+                                        /*Food f = foodDigest.get(0);
                                         SnakeBod sn2 = new SnakeBod(f.getPosi(), f.getPosi(), f.getWeight());
                                         snake.add(sn2);
                                         foodDigest.remove(0);
-                                        stack_ptr--;
+                                        stack_ptr--;*/
+                                        Food f = foodDigest.get(0);
+
+                                        if (f.getWeight() == snake.get(snake.size() - 1).getNum()) {
+                                            SnakeBod temp = snake.get(snake.size() - 1);
+                                            SnakeBod sn3 = new SnakeBod(temp.getPosi(), temp.getOldPosi(), temp.getNum() * 2);
+                                            snake.set(snake.size() - 1, sn3);
+                                            foodDigest.remove(0);
+                                            stack_ptr--;
+                                            nums[snake.get(snake.size() - 1).getOldPosi()] = 1;
+                                        } else {
+                                            SnakeBod sn2 = new SnakeBod(f.getPosi(), f.getPosi(), f.getWeight());
+                                            snake.add(sn2);
+                                            foodDigest.remove(0);
+                                            stack_ptr--;
+                                        }
                                     } else
                                         nums[snake.get(i).getOldPosi()] = 1;
                                 } else {
@@ -493,10 +548,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 if (stack_ptr != -1) {
                                     if (foodDigest.get(0).getPosi() == snake.get(i).getOldPosi()) {
                                         Food f = foodDigest.get(0);
-                                        SnakeBod sn2 = new SnakeBod(f.getPosi(), f.getPosi(), f.getWeight());
-                                        snake.add(sn2);
-                                        foodDigest.remove(0);
-                                        stack_ptr--;
+
+                                        if (f.getWeight() == snake.get(snake.size() - 1).getNum()) {
+                                            SnakeBod temp = snake.get(snake.size() - 1);
+                                            SnakeBod sn3 = new SnakeBod(temp.getPosi(), temp.getOldPosi(), temp.getNum() * 2);
+                                            snake.set(snake.size() - 1, sn3);
+                                            foodDigest.remove(0);
+                                            stack_ptr--;
+                                            nums[snake.get(snake.size() - 1).getOldPosi()] = 1;
+                                        } else {
+                                            SnakeBod sn2 = new SnakeBod(f.getPosi(), f.getPosi(), f.getWeight());
+                                            snake.add(sn2);
+                                            foodDigest.remove(0);
+                                            stack_ptr--;
+                                        }
                                     } else
                                         nums[snake.get(i).getOldPosi()] = 1;
                                 } else {
@@ -563,7 +628,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void testData(){
-        nums[3] = 2;
+        //nums[3] = 2;
         /*nums[4] = 4;
         nums[5] = 8;
         nums[10] = 16;
@@ -572,16 +637,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void putSnake(){
 
-        snake.add(new SnakeBod(5,5,2));
-        snake.add(new SnakeBod(4,4,4));
-        snake.add(new SnakeBod(3, 3, 8));
-        snake.add(new SnakeBod(9,9,16));
+        snake.add(new SnakeBod(7, 5, 2));
+        snake.add(new SnakeBod(8, 4, 4));
+        snake.add(new SnakeBod(9, 3, 16));
+        snake.add(new SnakeBod(10, 3, 8));
+        snake.add(new SnakeBod(16, 3, 4));
+
+        /*snake.add(new SnakeBod(9,9,16));
         snake.add(new SnakeBod(15, 15, 32));
         snake.add(new SnakeBod(14, 15, 64));
         snake.add(new SnakeBod(13, 15, 128));
         snake.add(new SnakeBod(12, 15, 256));
         snake.add(new SnakeBod(18, 15, 512));
-        snake.add(new SnakeBod(24, 15, 1024));
+        snake.add(new SnakeBod(24, 15, 1024));*/
 
 
         paintSnake();
@@ -617,6 +685,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         foodArr[n] = 8;
                         break;
                 }
+                nums[n] = 8;
+                foodArr[n] = 8;
                 break;
 
             }
