@@ -18,22 +18,39 @@
         app:cardBackgroundColor="@color/bg0"
         app:contentPadding="4dp">
 
-        <TextView
-            android:id="@+id/tvNum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:layout_gravity="center_horizontal|center_vertical"
-            android:textSize="25sp"/>
 
-        <ImageView
-            android:id="@+id/ivSnake"
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0.4"
-            android:scaleType="fitCenter"
-            android:src="@drawable/head3"
-            android:visibility="invisible" />
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:textSize="25sp"/>
+
+            <TextView
+                android:id="@+id/tvNum2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8"
+                android:textColor="@color/white"
+                android:layout_gravity="bottom|right"
+                android:textSize="12sp"/>
+
+            <ImageView
+                android:id="@+id/ivHead"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:alpha="0.3"
+                android:src="@null"/>
+
+        </FrameLayout>
+
 
     </android.support.v7.widget.CardView>
 

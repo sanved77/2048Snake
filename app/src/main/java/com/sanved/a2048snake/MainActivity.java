@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Handler handler;
     Random rand;
     Random rand2;
-    TextView tvGameOver;
+    TextView tvGameOver,tvScore;
 
     private static int SNAKE_SPEED = 800;
     // More the speed, slower the snake
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         testData();
         putSnake();
 
-        gAdapt = new GridAdapter(this, nums, foodDigest);
+        gAdapt = new GridAdapter(this, nums, foodDigest, DIRECTION, snake.get(0).getPosi());
 
         grid.setAdapter(gAdapt);
 
@@ -132,6 +132,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         4 - Left
         */
 
+        int score = 0;
+
         for (int i = 0; i < snake.size() - 1; i++) {
             // Check if body has merging elements
             if (snake.get(i).getNum() == snake.get(i + 1).getNum()) {
@@ -149,6 +151,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 snake.remove(i + 1);
             }
         }
+
+        // Check score
+        for(int i = 0; i < snake.size();i++){
+            score += snake.get(i).getNum();
+        }
+        tvScore.setText("Score\n"+score);
 
         int tempPosi, tempNum, newPosi, i;
         switch(DIRECTION){
@@ -576,7 +584,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         if(!gameOver) {
             paintSnake();
-            gAdapt.updateDat(nums, foodDigest);
+            gAdapt.updateDat(nums, foodDigest, DIRECTION, snake.get(0).getPosi());
 
         }else{
             // Game Over
@@ -612,12 +620,65 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rand2 = new Random();
 
         tvGameOver = findViewById(R.id.tvGameOver);
+        tvScore = findViewById(R.id.tvScore);
 
         Arrays.fill(foodArr, 1); // Empty mat with no food
 
         foodDigest = new ArrayList<>();
 
         foodDeleteQueue = new ArrayList<>();
+
+        tvGameOver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                tvGameOver.setVisibility(View.INVISIBLE);
+                up.show();
+                down.show();
+                right.show();
+                left.show();
+                DIRECTION = 3;
+
+                foodArr = new int[48];
+                FOOD_STACK = new int[15];
+                // If 1, no food. If 2^n, then food there at 2^n levels
+                foodDigest.clear();
+                foodDeleteQueue.clear();
+                gameOver = false;
+                posi = 3;
+                snake.clear();
+                stack_ptr = -1;
+                alphabets = new String[26];
+                nums = new int[48];
+                DIRECTION = 3;
+
+                Arrays.fill(foodArr, 1);
+
+                fillNumArr();
+                testData();
+                putSnake();
+
+                gAdapt = new GridAdapter(MainActivity.this, nums, foodDigest, DIRECTION, snake.get(0).getPosi());
+
+                grid.setAdapter(gAdapt);
+
+                grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                        // Starts the Madiin Activity displaying all the word but also sends the selected alphabet
+                        // so that only the words starting with that letter appear.
+
+                        Toast.makeText(MainActivity.this, "Nagdi bai - " + i, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(runnable, SNAKE_SPEED);
+
+                makeFood();
+            }
+        });
 
     }
 
@@ -637,11 +698,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void putSnake(){
 
-        snake.add(new SnakeBod(7, 5, 2));
-        snake.add(new SnakeBod(8, 4, 4));
-        snake.add(new SnakeBod(9, 3, 16));
-        snake.add(new SnakeBod(10, 3, 8));
-        snake.add(new SnakeBod(16, 3, 4));
+        snake.add(new SnakeBod(19, 5, 2));
+        snake.add(new SnakeBod(20, 4, 4));
+        snake.add(new SnakeBod(21, 3, 8));
+
 
         /*snake.add(new SnakeBod(9,9,16));
         snake.add(new SnakeBod(15, 15, 32));
@@ -685,14 +745,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         foodArr[n] = 8;
                         break;
                 }
-                nums[n] = 8;
-                foodArr[n] = 8;
                 break;
 
             }
 
         }
-        gAdapt.updateDat(nums, foodDigest);
+        gAdapt.updateDat(nums, foodDigest, DIRECTION, snake.get(0).getPosi());
 
     }
 

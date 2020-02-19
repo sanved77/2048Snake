@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -15,15 +16,19 @@ public class GridAdapter extends BaseAdapter {
     private Context context;
     private int nums[];
     private final String[] alphabets = new String[26];
+    private int DIRECTION;
+    private int head;
     private ArrayList<Food> foodDigest;
 
     //private static int count;
 
 
-    public GridAdapter(Context context, int nums[], ArrayList<Food> foodDigest) {
+    public GridAdapter(Context context, int nums[], ArrayList<Food> foodDigest, int DIRECTION, int head) {
         this.context = context;
         this.nums = nums;
         this.foodDigest = foodDigest;
+        this.DIRECTION = DIRECTION;
+        this.head = head;
         fillAlphabets();
     }
 
@@ -88,10 +93,15 @@ public class GridAdapter extends BaseAdapter {
         TextView textView = gridView
                 .findViewById(R.id.tvNum);
 
+        TextView textView2 = gridView
+                .findViewById(R.id.tvNum2);
+        textView2.setText("");
+
         for (int i = 0; i < foodDigest.size(); i++) {
             if (position == foodDigest.get(i).getPosi()) {
                 cv1.setCardBackgroundColor(ContextCompat.getColor(context, R.color.green));
                 textView.setTextColor(ContextCompat.getColor(context, R.color.white));
+                textView2.setText(""+foodDigest.get(i).getWeight());
             }
         }
         // set value into textview
@@ -106,6 +116,32 @@ public class GridAdapter extends BaseAdapter {
         if(nums[position] != 1)
             textView.setText("" + nums[position]);
 
+        ImageView snakeHead = gridView.findViewById(R.id.ivHead);
+
+        if(position == head) {
+            switch (DIRECTION) {
+
+            /*
+                1 - Up
+                2 - Right
+                3 - Down
+                4 - Left
+            */
+
+                case 1:
+                    snakeHead.setBackground(ContextCompat.getDrawable(context, R.drawable.head1));
+                    break;
+                case 2:
+                    snakeHead.setBackground(ContextCompat.getDrawable(context, R.drawable.head2));
+                    break;
+                case 3:
+                    snakeHead.setBackground(ContextCompat.getDrawable(context, R.drawable.head3));
+                    break;
+                case 4:
+                    snakeHead.setBackground(ContextCompat.getDrawable(context, R.drawable.head4));
+                    break;
+            }
+        }
 
         return gridView;
     }
@@ -120,9 +156,11 @@ public class GridAdapter extends BaseAdapter {
         return null;
     }
 
-    public void updateDat(int nums[], ArrayList<Food> foodDigest) {
+    public void updateDat(int nums[], ArrayList<Food> foodDigest, int DIRECTION, int head) {
         this.nums = nums;
         this.foodDigest = foodDigest;
+        this.DIRECTION = DIRECTION;
+        this.head = head;
         notifyDataSetChanged();
     }
 
